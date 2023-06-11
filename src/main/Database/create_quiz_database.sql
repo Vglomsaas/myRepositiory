@@ -5,11 +5,13 @@ CREATE DATABASE quizDB;
     the DB.
 */
 
+/* CREATING USER TO CONNECT TO THE DATABASE */
 CREATE USER 'user' IDENTIFIED BY 'password';
 GRANT ALL ON QuizDB.* TO 'user';
 
 USE quizDB;
 
+/* CREATING MULTICHOICE TABLE AND INSERTING QUESTIONS */
 CREATE TABLE multichoiceQuiz (
     id int,
     question VARCHAR(64) UNIQUE,
@@ -23,6 +25,7 @@ CREATE TABLE multichoiceQuiz (
 INSERT INTO multichoiceQuiz (id, question, answerA, answerB, answerC, answerD, correctAnswer)
 VALUES (0, 'Hvilke to farger kombinert skaper lilla?', 'Rød og Blå', 'Blå og Grønn', 'Gul og Rød', 'Rød og Grønn', 'Rød og Blå');
 
+/* CREATING BINARY TABLE AND INSERTING QUESTIONS */
 CREATE TABLE binaryQuiz (
     id int,
     question VARCHAR(64) UNIQUE,
@@ -33,3 +36,10 @@ CREATE TABLE binaryQuiz (
 
 INSERT INTO binaryQuiz (id, question, answerA, answerB, correctAnswer)
 VALUES (0, 'Kongen av Norge heter Halvord til fornavn. (j/n)', 'ja', 'nei', 'nei');
+
+/* CREATING USER TABLE TO STORE HIGHSCORE */
+CREATE TABLE users (
+    id int,
+    name VARCHAR(64),
+    highscore int
+);
