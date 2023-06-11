@@ -79,7 +79,7 @@ VALUES (
 
 /* CREATING USER TABLE TO STORE HIGHSCORE */
 CREATE TABLE users (
-    id int,
+    id int UNIQUE NOT NULL AUTO_INCREMENT,
     name VARCHAR(64),
     highscore int
 );
