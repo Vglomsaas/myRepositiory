@@ -13,8 +13,8 @@ USE quizDB;
 
 /* CREATING MULTICHOICE TABLE AND INSERTING QUESTIONS */
 CREATE TABLE multichoiceQuiz (
-    id int,
-    question VARCHAR(64) UNIQUE,
+    id int UNIQUE NOT NULL AUTO_INCREMENT,
+    question VARCHAR(256) UNIQUE,
     answerA VARCHAR(64),
     answerB VARCHAR(64),
     answerC VARCHAR(64),
@@ -22,20 +22,60 @@ CREATE TABLE multichoiceQuiz (
     correctAnswer VARCHAR(64)
 );
 
-INSERT INTO multichoiceQuiz (id, question, answerA, answerB, answerC, answerD, correctAnswer)
-VALUES (0, 'Hvilke to farger kombinert skaper lilla?', 'Rød og Blå', 'Blå og Grønn', 'Gul og Rød', 'Rød og Grønn', 'Rød og Blå');
+INSERT INTO multichoiceQuiz (question, answerA, answerB, answerC, answerD, correctAnswer)
+VALUES (
+            'Hvilke to farger kombinert skaper lilla?',
+            'Rød og Blå',
+            'Blå og Grønn',
+            'Gul og Rød',
+            'Rød og Grønn',
+            'Rød og Blå'
+        );
+
+INSERT INTO multichoiceQuiz (question, answerA, answerB, answerC, answerD, correctAnswer)
+VALUES (
+           'Hva er 1 + 1?',
+           '3',
+           '5',
+           '1',
+           '2',
+           '2'
+       );
+
+INSERT INTO multichoiceQuiz (question, answerA, answerB, answerC, answerD, correctAnswer)
+VALUES (
+           'Hvilken karrakter ville jeg fått på denne eksamen dersom det var gradering?',
+           'D',
+           'A',
+           'B',
+           'F',
+           'A'
+       );
 
 /* CREATING BINARY TABLE AND INSERTING QUESTIONS */
 CREATE TABLE binaryQuiz (
-    id int,
-    question VARCHAR(64) UNIQUE,
+    id int UNIQUE NOT NULL AUTO_INCREMENT,
+    question VARCHAR(256) UNIQUE,
     answerA VARCHAR(64),
     answerB VARCHAR(64),
     correctAnswer VARCHAR(64)
 );
 
-INSERT INTO binaryQuiz (id, question, answerA, answerB, correctAnswer)
-VALUES (0, 'Kongen av Norge heter Halvord til fornavn. (j/n)', 'ja', 'nei', 'nei');
+INSERT INTO binaryQuiz (question, answerA, answerB, correctAnswer)
+VALUES (
+            'Kongen av Norge heter Halvord til fornavn. (j/n)',
+            'ja',
+            'nei',
+            'nei'
+        );
+
+INSERT INTO binaryQuiz (question, answerA, answerB, correctAnswer)
+VALUES (
+           'Norge feirer nasjonaldag den 8 Mai.',
+           'ja',
+           'nei',
+           'nei'
+        );
 
 /* CREATING USER TABLE TO STORE HIGHSCORE */
 CREATE TABLE users (
