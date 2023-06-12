@@ -80,6 +80,6 @@ VALUES (
 /* CREATING USER TABLE TO STORE HIGHSCORE */
 CREATE TABLE users (
     id int UNIQUE NOT NULL AUTO_INCREMENT,
-    name VARCHAR(64),
+    name VARCHAR(3) UNIQUE,
     highscore int
 );

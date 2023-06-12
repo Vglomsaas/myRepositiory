@@ -3,7 +3,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class SetupQuiz {
 
@@ -16,9 +15,9 @@ public class SetupQuiz {
     private static ResultSet rsMultichoiceQuiz;
     private static ResultSet rsUsersList;
 
-    private ArrayList<BinaryRecordObject> binaryQuestionObjects = new ArrayList<>();
-    private ArrayList<MultichoiceRecordObject> multichoiceQuestionObjects = new ArrayList<>();
-    private ArrayList<UserRecordObject> userObjects= new ArrayList<>();
+    private ArrayList<BinaryRecordObject> binaryObjectsArraylist = new ArrayList<>();
+    private ArrayList<MultichoiceRecordObject> multichoiceObjectsArraylist = new ArrayList<>();
+    private ArrayList<UserRecordObject> userObjectsArraylist = new ArrayList<>();
 
     //# STATIC INITIALIZER
     static {
@@ -49,7 +48,7 @@ public class SetupQuiz {
                          rsBinaryQuiz.getString("correctAnswer")
                  );
 
-                 binaryQuestionObjects.add(object);
+                 binaryObjectsArraylist.add(object);
             }
 
             rsMultichoiceQuiz = statement.executeQuery(multichoiceQuery);
@@ -65,11 +64,14 @@ public class SetupQuiz {
                         rsMultichoiceQuiz.getString("correctAnswer")
                 );
 
-                multichoiceQuestionObjects.add(object);
+                multichoiceObjectsArraylist.add(object);
             }
 
             rsUsersList = statement.executeQuery(usersListQuery);
 
+            // Here we check if data exists in the users table,
+            // to prevent that data is being gathered from an
+            // empty ResultSet.
             if (rsUsersList.isBeforeFirst()) {
 
                 isFirstUser = false;
@@ -82,7 +84,7 @@ public class SetupQuiz {
                             rsUsersList.getString("highscore")
                     );
 
-                    userObjects.add(object);
+                    userObjectsArraylist.add(object);
                 }
             }
 
@@ -93,16 +95,34 @@ public class SetupQuiz {
     };
 
     //# GETTERS
-    public ArrayList<BinaryRecordObject> getBinaryQuestionObjects() {
-        return binaryQuestionObjects;
+    public ArrayList<BinaryRecordObject> getBinaryObjectsArraylist() {
+
+        return binaryObjectsArraylist;
+
     }
-    public ArrayList<MultichoiceRecordObject> getMultichoiceQuestionObjects() {
-        return multichoiceQuestionObjects;
+    public ArrayList<MultichoiceRecordObject> getMultichoiceObjectsArraylist() {
+
+        return multichoiceObjectsArraylist;
+
     }
-    public ArrayList<UserRecordObject> getUserObjects() {
-        return userObjects;
+    public ArrayList<UserRecordObject> getUserObjectsArraylist() {
+
+        if(!isFirstUser) {
+
+            // Return highscores if users has been registered.
+            return userObjectsArraylist;
+
+        } else {
+
+            //  Returns null if no users has been registered.
+            return null;
+
+        }
+
     }
     public Boolean isFirstUser() {
+
         return isFirstUser;
+
     }
 }
