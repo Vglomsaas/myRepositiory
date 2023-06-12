@@ -63,18 +63,18 @@ CREATE TABLE binaryQuiz (
 
 INSERT INTO binaryQuiz (question, answerA, answerB, correctAnswer)
 VALUES (
-            'Kongen av Norge heter Halvord til fornavn. (j/n)',
-            'ja',
-            'nei',
-            'nei'
+            'Kongen av Norge heter Halvord til fornavn.',
+            'Sant',
+            'Usant',
+            'Usant'
         );
 
 INSERT INTO binaryQuiz (question, answerA, answerB, correctAnswer)
 VALUES (
            'Norge feirer nasjonaldag den 8 Mai.',
-           'ja',
-           'nei',
-           'nei'
+           'Sant',
+           'Usant',
+           'Usant'
         );
 
 /* CREATING USER TABLE TO STORE HIGHSCORE */

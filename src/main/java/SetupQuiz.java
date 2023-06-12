@@ -2,6 +2,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SetupQuiz {
@@ -15,14 +16,9 @@ public class SetupQuiz {
     private static ResultSet rsMultichoiceQuiz;
     private static ResultSet rsUsersList;
 
-    private HashMap<Integer, String> binaryQuestions = new HashMap<>();
-    private HashMap<Integer, String> binaryAnswers = new HashMap<>();
-
-    private HashMap<Integer, String> multichoiceQuestions = new HashMap<>();
-    private HashMap<Integer, String> multichoiceAnswers = new HashMap<>();
-
-    private HashMap<Integer, String> usersName = new HashMap<>();
-    private HashMap<Integer, String> usersScore = new HashMap<>();
+    private ArrayList<BinaryRecordObject> binaryQuestionObjects = new ArrayList<>();
+    private ArrayList<MultichoiceRecordObject> multichoiceQuestionObjects = new ArrayList<>();
+    private ArrayList<UserRecordObject> userObjects= new ArrayList<>();
 
     //# STATIC INITIALIZER
     static {
@@ -45,29 +41,31 @@ public class SetupQuiz {
             rsBinaryQuiz = statement.executeQuery(binaryQuery);
 
             while (rsBinaryQuiz.next()) {
-                binaryQuestions.put(
-                    rsBinaryQuiz.getInt("id"), //# Get question ID
-                    rsBinaryQuiz.getString("question") //# Get question String
-                );
+                 BinaryRecordObject object = new BinaryRecordObject (
+                         rsBinaryQuiz.getInt("id"),
+                         rsBinaryQuiz.getString("question"),
+                         rsBinaryQuiz.getString("answerA"),
+                         rsBinaryQuiz.getString("answerB"),
+                         rsBinaryQuiz.getString("correctAnswer")
+                 );
 
-                binaryAnswers.put(
-                        rsBinaryQuiz.getInt("id"), //# Get answer ID
-                        rsBinaryQuiz.getString("correctAnswer") //# Get answer String
-                );
+                 binaryQuestionObjects.add(object);
             }
 
             rsMultichoiceQuiz = statement.executeQuery(multichoiceQuery);
 
             while (rsMultichoiceQuiz.next()) {
-                multichoiceQuestions.put(
-                    rsMultichoiceQuiz.getInt("id"),//# Get question ID
-                    rsMultichoiceQuiz.getString("question") //# Get question String
+                MultichoiceRecordObject object = new MultichoiceRecordObject (
+                        rsMultichoiceQuiz.getInt("id"),
+                        rsMultichoiceQuiz.getString("question"),
+                        rsMultichoiceQuiz.getString("answerA"),
+                        rsMultichoiceQuiz.getString("answerB"),
+                        rsMultichoiceQuiz.getString("answerC"),
+                        rsMultichoiceQuiz.getString("answerD"),
+                        rsMultichoiceQuiz.getString("correctAnswer")
                 );
 
-                multichoiceAnswers.put(
-                    rsMultichoiceQuiz.getInt("id"), //# Get answer ID
-                    rsMultichoiceQuiz.getString("correctAnswer") //# Get answer String
-                );
+                multichoiceQuestionObjects.add(object);
             }
 
             rsUsersList = statement.executeQuery(usersListQuery);
@@ -77,15 +75,14 @@ public class SetupQuiz {
                 isFirstUser = false;
 
                 while (rsUsersList.next()) {
-                    usersName.put(
-                            rsUsersList.getInt("id"),
-                            rsUsersList.getString("name")
-                    );
 
-                    usersScore.put(
+                    UserRecordObject object = new UserRecordObject(
                             rsUsersList.getInt("id"),
+                            rsUsersList.getString("name"),
                             rsUsersList.getString("highscore")
                     );
+
+                    userObjects.add(object);
                 }
             }
 
@@ -95,19 +92,16 @@ public class SetupQuiz {
         }
     };
 
-    public HashMap<Integer, String> getBinaryQuestions() {
-        return binaryQuestions;
-    };
-    public HashMap<Integer, String> getBinaryAnswers() {
-        return binaryAnswers;
-    };
-    public HashMap<Integer, String> getMultichoiceQuestions() {
-        return multichoiceQuestions;
-    };
-    public HashMap<Integer, String> getMultichoiceAnswers() {
-        return multichoiceAnswers;
-    };
-    public HashMap<Integer, String> getUsersName(){ return usersName;};
+    //# GETTERS
+    public ArrayList<BinaryRecordObject> getBinaryQuestionObjects() {
+        return binaryQuestionObjects;
+    }
+    public ArrayList<MultichoiceRecordObject> getMultichoiceQuestionObjects() {
+        return multichoiceQuestionObjects;
+    }
+    public ArrayList<UserRecordObject> getUserObjects() {
+        return userObjects;
+    }
     public Boolean isFirstUser() {
         return isFirstUser;
     }
