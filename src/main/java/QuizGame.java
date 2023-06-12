@@ -79,9 +79,9 @@ public class QuizGame {
     private static void printBinaryQuiz(Scanner scanner, ArrayList<BinaryRecordObject> binaryRecordObjects) {
         System.out.print(
                 binaryRecordObjects.get(0).question() + "\n" +
-                binaryRecordObjects.get(0).answerA() + "\n" +
-                binaryRecordObjects.get(0).answerB() + "\n"
-                );
+                "(1)" + binaryRecordObjects.get(0).answerA() + "\n" +
+                "(2)" + binaryRecordObjects.get(0).answerB() + "\n"
+        );
 
     };
 
@@ -98,7 +98,6 @@ public class QuizGame {
 
         // Run the quiz.
         printStartMenu(scanner, setup, binaryRecordObjects, multichoiceRecordObjects);
-        printBinaryQuiz(scanner, binaryRecordObjects);
 
     };
 }
